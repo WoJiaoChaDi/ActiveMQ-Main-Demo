@@ -36,7 +36,8 @@ public class JmsConsumer {
         MessageConsumer messageConsumer = session.createConsumer(queue);
         while(true){
             //6.消费者获取一条消息（此时mq控制台里面会少一条消息）  receive()方法参数为空，则会一直等待
-            TextMessage textMessage = (TextMessage) messageConsumer.receive();
+            //TextMessage textMessage = (TextMessage) messageConsumer.receive();
+            TextMessage textMessage = (TextMessage) messageConsumer.receive(4000L); //添加recive()添加参数，则4秒后自动关闭进程
             if(null != textMessage){
                 System.out.println("***消费者收到消息***：" + textMessage.getText());
             }else{

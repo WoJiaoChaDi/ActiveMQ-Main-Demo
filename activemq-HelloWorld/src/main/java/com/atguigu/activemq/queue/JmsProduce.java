@@ -38,7 +38,7 @@ public class JmsProduce {
         MessageProducer messageProducer = session.createProducer(queue);
 
         //6.通过使用messageProducer 产生3条消息到队列里面
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 6; i++) {
             //7.创建消息
             TextMessage textMessage = session.createTextMessage("This is msg: " + i);//字符串消息
             //8.通过messageProducer发给mq（此时mq控制台的队列里面会多一条消息）

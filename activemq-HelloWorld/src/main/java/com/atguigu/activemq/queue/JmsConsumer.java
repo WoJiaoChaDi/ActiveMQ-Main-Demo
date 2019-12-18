@@ -34,6 +34,11 @@ public class JmsConsumer {
         //======消费者不同的地方======
         //5.创建消费者
         MessageConsumer messageConsumer = session.createConsumer(queue);
+
+        /*
+         * 同步堵塞方式( receive() )
+         * 订阅者或接收者调用 MessageConsumer.receive()方法接收消息，receive方法在能够接收到消息之前（或超时之前）将一直阻塞。
+         */
         while(true){
             //6.消费者获取一条消息（此时mq控制台里面会少一条消息）  receive()方法参数为空，则会一直等待
             //TextMessage textMessage = (TextMessage) messageConsumer.receive();

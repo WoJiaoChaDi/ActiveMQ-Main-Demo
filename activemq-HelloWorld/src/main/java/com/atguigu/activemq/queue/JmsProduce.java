@@ -3,6 +3,7 @@ package com.atguigu.activemq.queue;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.Connection;
+import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
@@ -41,8 +42,22 @@ public class JmsProduce {
         for (int i = 0; i < 6; i++) {
             //7.创建消息
             TextMessage textMessage = session.createTextMessage("This is msg: " + i);//字符串消息
-            //8.通过messageProducer发给mq（此时mq控制台的队列里面会多一条消息）
+
+            //设置消息的额外参数，也可以在 messageProducer.send方法中进行设置
+            //设置消息的目的地，可以重新设置目的地
+            textMessage.setJMSDestination(queue);
+            //设置消息的持久性
+            textMessage.setJMSDeliveryMode(DeliveryMode.PERSISTENT);
+            //消息的过期时间（默认永不过期）
+            textMessage.setJMSExpiration(1000L);
+            //消息的优先级，0-9 十个级别， 0-4 普通消息  5-9 加急消息
+            textMessage.setJMSPriority(9);
+            //消息的id，唯一识别编号
+            textMessage.setJMSMessageID("MsgId_" + i);
+
+            //8.通过messageProducer发给mq（此时mq控制台的队列里面会多一条消息）  设置消息的额外参数，有多种重写的方法
             messageProducer.send(textMessage);
+
         }
 
         //9.关闭消息

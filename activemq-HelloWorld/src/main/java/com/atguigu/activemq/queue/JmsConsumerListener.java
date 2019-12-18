@@ -4,9 +4,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -41,16 +39,30 @@ public class JmsConsumerListener {
         /*
          * 用消息监听的方式
          */
-        messageConsumer.setMessageListener(new MessageListener() {
-            @Override
-            public void onMessage(Message message) {
-                if(null != message && message instanceof  TextMessage){
-                    TextMessage textMessage = (TextMessage) message;
-                    try {
-                        System.out.println("***消费者-消息监听-收到消息***： " + textMessage.getText());
-                    } catch (JMSException e) {
-                        e.printStackTrace();
-                    }
+        //messageConsumer.setMessageListener(new MessageListener() {
+        //    @Override
+        //    public void onMessage(Message message) {
+        //        if(null != message && message instanceof  TextMessage){
+        //            TextMessage textMessage = (TextMessage) message;
+        //            try {
+        //                System.out.println("***消费者-消息监听-收到消息***： " + textMessage.getText());
+        //            } catch (JMSException e) {
+        //                e.printStackTrace();
+        //            }
+        //        }
+        //    }
+        //});
+
+        /*
+         * 用消息监听的方式（lambda表达式）
+         */
+        messageConsumer.setMessageListener((message) -> {
+            if(null != message && message instanceof  TextMessage){
+                TextMessage textMessage = (TextMessage) message;
+                try {
+                    System.out.println("***消费者-消息监听-收到消息***： " + textMessage.getText());
+                } catch (JMSException e) {
+                    e.printStackTrace();
                 }
             }
         });

@@ -18,6 +18,9 @@ public class JmsConsumerListenerTopic_01 {
     public static String TOPIC_NAME = "topic_persistent";
 
     public static void main(String[] args) throws JMSException, IOException {
+
+        System.out.println("订阅者_01");
+
         //1 创建连接工场,使用默认用户名密码
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(ACTIVEMQ_USER, ACTIVEMQ_PASSWORD, ACTIVEMQ_BROKER_URL);
 
@@ -35,23 +38,6 @@ public class JmsConsumerListenerTopic_01 {
         //======消费者不同的地方======
         //5.创建消费者  (与queue不一样的地方2：传入Topic类型参数)
         MessageConsumer messageConsumer = session.createConsumer(topic);
-
-        /*
-         * 用消息监听的方式
-         */
-        //messageConsumer.setMessageListener(new MessageListener() {
-        //    @Override
-        //    public void onMessage(Message message) {
-        //        if(null != message && message instanceof  TextMessage){
-        //            TextMessage textMessage = (TextMessage) message;
-        //            try {
-        //                System.out.println("***消费者-消息监听-收到消息***： " + textMessage.getText());
-        //            } catch (JMSException e) {
-        //                e.printStackTrace();
-        //            }
-        //        }
-        //    }
-        //});
 
         /*
          * 用消息监听的方式（lambda表达式）

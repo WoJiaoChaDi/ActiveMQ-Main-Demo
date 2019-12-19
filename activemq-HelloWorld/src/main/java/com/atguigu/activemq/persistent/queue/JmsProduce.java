@@ -37,6 +37,9 @@ public class JmsProduce {
         //5.创建消息的生产者（此时mq控制台，会创建queue01的队列）
         MessageProducer messageProducer = session.createProducer(queue);
 
+        //***消息的持久化设置*** 默认持久化配置是：持久化
+        messageProducer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+
         //6.通过使用messageProducer 产生3条消息到队列里面
         for (int i = 0; i < 6; i++) {
             //7.创建消息

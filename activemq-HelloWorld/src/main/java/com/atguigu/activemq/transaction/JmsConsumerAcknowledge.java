@@ -47,6 +47,8 @@ public class JmsConsumerAcknowledge {
             TextMessage textMessage = (TextMessage) messageConsumer.receive(4000L); //添加recive()添加参数，则4秒后自动关闭进程
             if(null != textMessage){
                 System.out.println("***消费者收到消息***：" + textMessage.getText());
+                //手动签收成功，消息才会真正消费，并在Messages Dequeued入队一条
+                textMessage.acknowledge();
             }else{
                 break;
             }

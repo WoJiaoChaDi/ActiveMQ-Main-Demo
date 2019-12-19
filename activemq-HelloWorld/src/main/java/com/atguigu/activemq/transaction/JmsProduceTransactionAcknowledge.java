@@ -15,7 +15,7 @@ public class JmsProduceTransactionAcknowledge {
     public static String ACTIVEMQ_USER = "admin";
     public static String ACTIVEMQ_PASSWORD = "admin";
     public static String ACTIVEMQ_BROKER_URL = "tcp://192.168.198.129:61616";
-    public static String QUEUE_NAME = "queue_acknoweledge";
+    public static String QUEUE_NAME = "queue_transaction_acknoweledge";
 
     public static void main(String[] args) throws JMSException {
 

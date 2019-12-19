@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/activemq-HelloWorld/activemq-HelloWorld.iml" filepath="$PROJECT_DIR$/activemq-HelloWorld/activemq-HelloWorld.iml" />
-      <module fileurl="file://$PROJECT_DIR$/activemq-Main-Demo.iml" filepath="$PROJECT_DIR$/activemq-Main-Demo.iml" />
-    </modules>
-  </component>
-</project>

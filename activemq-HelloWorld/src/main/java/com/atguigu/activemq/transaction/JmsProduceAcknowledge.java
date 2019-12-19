@@ -65,8 +65,6 @@ public class JmsProduceAcknowledge {
             messageProducer.send(textMessage);
         }
 
-        //提交事务
-        session.commit();
         //9.关闭消息
         messageProducer.close();
         session.close();

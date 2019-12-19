@@ -3,6 +3,7 @@ package com.atguigu.activemq.persistent.topic;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.Connection;
+import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
@@ -23,7 +24,9 @@ public class JmsProduceTopic {
 
         //2 获得连接并启动
         Connection connection = activeMQConnectionFactory.createConnection();
-        connection.start();
+
+        //topic持久化，这个start不能先启动，得在设置持久化之后启动
+        //connection.start();
 
         //3 创建会话,此步骤有两个参数，第一个是否以事务的方式提交，第二个默认的签收方式
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -35,6 +38,10 @@ public class JmsProduceTopic {
         //======生产者不同的地方======
         //5.创建消息的生产者（此时mq控制台，会创建topic的队列）  (与queue不一样的地方2:传入Topic类型参数)
         MessageProducer messageProducer = session.createProducer(topic);
+        //***设置主题topic的持久化***
+        messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);
+        //设置持久化后，再启动连接
+        connection.start();
 
         //6.通过使用messageProducer 产生3条消息到队列里面
         for (int i = 0; i < 6; i++) {

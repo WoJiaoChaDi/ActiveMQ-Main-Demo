@@ -4,10 +4,12 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
+import javax.jms.TopicSubscriber;
 import java.io.IOException;
 
 public class JmsConsumerListenerTopic_02 {
@@ -26,7 +28,11 @@ public class JmsConsumerListenerTopic_02 {
 
         //2 获得连接并启动
         Connection connection = activeMQConnectionFactory.createConnection();
-        connection.start();
+        //topic订阅者的持久化，不能先把连接打开了
+        //connection.start();
+        //***设置订阅者id***
+        connection.setClientID("sub_02");
+
 
         //3 创建会话,此步骤有两个参数，第一个是否以事务的方式提交，第二个默认的签收方式
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -35,28 +41,19 @@ public class JmsConsumerListenerTopic_02 {
         //Destination destination = session.createTopic(TOPIC_NAME);
         Topic topic = session.createTopic(TOPIC_NAME);
 
-        //======消费者不同的地方======
-        //5.创建消费者  (与queue不一样的地方2：传入Topic类型参数)
-        MessageConsumer messageConsumer = session.createConsumer(topic);
+        //***创建持久化订阅者***
+        TopicSubscriber topicSubscriber = session.createDurableSubscriber(topic, "remark....");
 
-        /*
-         * 用消息监听的方式（lambda表达式）
-         */
-        messageConsumer.setMessageListener((message) -> {
-            if(null != message && message instanceof  TextMessage){
-                TextMessage textMessage = (TextMessage) message;
-                try {
-                    System.out.println("***消费者-消息监听-收到消息***： " + textMessage.getText());
-                } catch (JMSException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        //启动连接
+        connection.start();
 
-        //press any key to exit  保持进程不灭,给消费者连接一些时间，不然还没连上消费就把连接关了
-        System.in.read();
+        Message message = topicSubscriber.receive();
+        while (null != message){
+            TextMessage textMessage = (TextMessage) message;
+            System.out.println("*** sub_02 -> 收到的持久化topic***" + textMessage.getText());
+            message = topicSubscriber.receive(1000L);
+        }
 
-        messageConsumer.close();
         session.close();
         connection.close();
         System.out.println("***消费者接受消息完成！！！***");

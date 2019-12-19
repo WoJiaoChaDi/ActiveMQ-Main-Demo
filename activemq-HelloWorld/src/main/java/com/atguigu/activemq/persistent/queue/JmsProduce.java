@@ -1,4 +1,4 @@
-package com.atguigu.activemq.persistent;
+package com.atguigu.activemq.persistent.queue;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 

@@ -1,4 +1,4 @@
-package com.atguigu.activemq.persistent;
+package com.atguigu.activemq.persistent.queue;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
@@ -10,7 +10,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import java.io.IOException;
 
-public class JmsConsumerListener_01 {
+public class JmsConsumerListener_02 {
 
     public static String ACTIVEMQ_USER = "admin";
     public static String ACTIVEMQ_PASSWORD = "admin";
@@ -18,7 +18,7 @@ public class JmsConsumerListener_01 {
     public static String QUEUE_NAME = "queue_persistent";
 
     public static void main(String[] args) throws JMSException, IOException {
-        System.out.println("***1号消费者***");
+        System.out.println("***2号消费者***");
 
         //1 创建连接工场,使用默认用户名密码
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(ACTIVEMQ_USER, ACTIVEMQ_PASSWORD, ACTIVEMQ_BROKER_URL);

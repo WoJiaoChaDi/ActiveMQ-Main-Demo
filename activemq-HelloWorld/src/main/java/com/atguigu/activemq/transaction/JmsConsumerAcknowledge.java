@@ -27,7 +27,9 @@ public class JmsConsumerAcknowledge {
         //3 创建会话,此步骤有两个参数，
         // 第一个是否以事务的方式提交，
         // 第二个默认的签收方式(默认是自动签收)
-        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        //Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        //改为手动签收
+        Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
 
         //4.创建目的地，具体可以是队列 也可以是 主题
         //Destination destination = session.createQueue(QUEUE_NAME);

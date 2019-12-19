@@ -50,7 +50,7 @@ public class JmsConsumerTransactionAcknowledge {
             if(null != textMessage){
                 System.out.println("***消费者收到消息***：" + textMessage.getText());
                 //手动签收成功，消息才会真正消费，并在Messages Dequeued入队一条
-                textMessage.acknowledge();
+                //textMessage.acknowledge();  //如果按照事务消费，则不用签收了，提交事务的时候，自动全部签收了
             }else{
                 break;
             }

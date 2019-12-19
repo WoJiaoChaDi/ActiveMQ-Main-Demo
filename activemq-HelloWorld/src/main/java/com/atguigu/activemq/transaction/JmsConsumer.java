@@ -24,8 +24,10 @@ public class JmsConsumer {
         Connection connection = activeMQConnectionFactory.createConnection();
         connection.start();
 
-        //3 创建会话,此步骤有两个参数，第一个是否以事务的方式提交，第二个默认的签收方式
-        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        //3 创建会话,此步骤有两个参数，
+        // 第一个是否以事务的方式提交，如果是以事务方式消费，则需要消费完后执行session.commit()，才能把消息真正消费掉
+        // 第二个默认的签收方式
+        Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
 
         //4.创建目的地，具体可以是队列 也可以是 主题
         //Destination destination = session.createQueue(QUEUE_NAME);
@@ -51,6 +53,8 @@ public class JmsConsumer {
         }
 
         messageConsumer.close();
+        //提交事务，如果开启事务却不提交，则并没有在mq中真正的消费掉事务
+        session.commit();
         session.close();
         connection.close();
         System.out.println("***queue_transaction_消费者接受消息完成！！！***");
